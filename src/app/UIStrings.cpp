@@ -44,31 +44,31 @@ std::string UIStrings::Get(int table, int index, const char* fallback) const {
 std::string UIStrings::Motive(int i) const {
     // Help (STR#166) titles; Room from CatalogRatings (STR#160 "Room: %d")
     switch (i) {
-        case 0: return Get(166, 38, "Hunger");
-        case 1: return Get(166, 16, "Comfort");
-        case 2: return Get(166, 40, "Hygiene");
-        case 3: return Get(166, 4, "Bladder");
-        case 4: return Get(166, 22, "Energy");
-        case 5: return Get(166, 30, "Fun");
-        case 6: return Get(166, 72, "Social");
-        default: return Get(160, 6, "Room");
+        case 0: return Get(166, 38, "Hambre");
+        case 1: return Get(166, 16, "Comodidad");
+        case 2: return Get(166, 40, "Higiene");
+        case 3: return Get(166, 4, "Vejiga");
+        case 4: return Get(166, 22, ToLatin1("Energía").c_str());
+        case 5: return Get(166, 30, ToLatin1("Diversión").c_str());
+        case 6: return Get(166, 72, "Sociedad");
+        default: return Get(160, 6, ToLatin1("Habitación").c_str());
     }
 }
 
 std::string UIStrings::Speed(int i) const {
     switch (i) {
-        case 0: return Get(138, 15, "Pause");
-        case 1: return Get(138, 16, "Normal Speed");
-        case 2: return Get(138, 17, "High Speed");
-        default: return Get(138, 18, "Ultra Speed");
+        case 0: return Get(138, 15, "Pausa");
+        case 1: return Get(138, 16, "Velocidad normal");
+        case 2: return Get(138, 17, "Velocidad alta");
+        default: return Get(138, 18, "Velocidad ultra");
     }
 }
 
 std::string UIStrings::Walls(int mode) const {
     switch (mode) {
-        case 0: return Get(138, 8, "Walls Cutaway");
-        case 1: return Get(138, 9, "Walls Down");
-        default: return Get(138, 7, "Walls Up");
+        case 0: return Get(138, 8, "Paredes cortadas");
+        case 1: return Get(138, 9, "Sin paredes");
+        default: return Get(138, 7, "Paredes arriba");
     }
 }
 
