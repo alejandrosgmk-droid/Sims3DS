@@ -21,13 +21,13 @@ void UIOptionsPanel::Draw(Canvas& c, const Rect& a) {
     L->DrawPanelFrame(c, a);
     auto& gt = GameText::Get();
     auto& s = *L->S;
-    DrawText(c, FontId::Bold, a.X + 8, a.Y + 4, gt.UI(138, 13, "Options"), RGBA(255, 230, 120));
+    DrawText(c, FontId::Bold, a.X + 8, a.Y + 4, gt.UI(138, 13, "Opciones"), RGBA(255, 230, 120));
     // TS1(sims): the cheat console (PC: Ctrl+Shift+C; on the console also L+R+SELECT), see app/ui/UICheatConsole.h
-    L->DrawArtButton(c, Rect(a.Right() - 58, a.Y + 3, 52, 16), "", 1, false, false, "Cheat", "opt_cheat");
+    L->DrawArtButton(c, Rect(a.Right() - 58, a.Y + 3, 52, 16), "", 1, false, false, "Trucos", "opt_cheat");
 
     // ---- view controls (TS1 camera panel)
     int x0 = a.X + 8, y = a.Y + 24;
-    DrawText(c, FontId::Small, x0, y, "View", RGBA(150, 170, 255));
+    DrawText(c, FontId::Small, x0, y, "Vista", RGBA(150, 170, 255));
     y += 14;
     L->DrawArtButton(c, Rect(x0, y, 30, 30), "cpanel/Buttons/rotleft.bmp", 4, false, false, "<", "opt_rotl");
     L->DrawArtButton(c, Rect(x0 + 34, y, 30, 30), "cpanel/Buttons/rotright.bmp", 4, false, false, ">", "opt_rotr");
@@ -47,8 +47,8 @@ void UIOptionsPanel::Draw(Canvas& c, const Rect& a) {
     DrawText(c, FontId::Small, std::max(x0 + 160, wx + 3 * 36 - 4 - TextWidth(FontId::Small, wl)), y, wl, RGBA(200, 210, 255));
     // stories
     int level = s.World()->State.Level();
-    L->DrawArtButton(c, Rect(x0, y, 40, 18), "cpanel/Buttons/Lev1.BMP", 4, level == 1, false, gt.UI(138, 0, "First Story"), "opt_lev1");
-    L->DrawArtButton(c, Rect(x0 + 44, y, 40, 18), "cpanel/Buttons/Lev2.BMP", 4, level == 2, false, gt.UI(138, 1, "Second Story"), "opt_lev2");
+    L->DrawArtButton(c, Rect(x0, y, 40, 18), "cpanel/Buttons/Lev1.BMP", 4, level == 1, false, gt.UI(138, 0, "Primera Planta"), "opt_lev1");
+    L->DrawArtButton(c, Rect(x0 + 44, y, 40, 18), "cpanel/Buttons/Lev2.BMP", 4, level == 2, false, gt.UI(138, 1, "Segunda Planta"), "opt_lev2");
     DrawText(c, FontId::Small, x0 + 90, y + 3, gt.UI(138, level - 1, level == 1 ? "First Story" : "Second Story"), RGBA(200, 210, 255));
     y += 28;
 
