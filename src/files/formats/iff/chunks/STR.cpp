@@ -33,7 +33,7 @@ const char* const STR::LanguageSetNames[20] =
     "Korean"
 };
 
-STRLangCode STR::DefaultLangCode = STRLangCode::EnglishUS;
+STRLangCode STR::DefaultLangCode = STRLangCode::Spanish;
 
 STR::STR()
 {
