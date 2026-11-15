@@ -110,7 +110,7 @@ void App::StatusScreen(const std::string& title, const std::string& msg) {
     int y = 112;
     for (auto& l : lines) { DrawTextCentered(Top, FontId::Small, Rect(0, y, TOP_W, 14), l, theme::Text); y += 14; }
     Bottom.GradientV(0, 0, BOT_W, BOT_H, theme::PanelBottom, theme::ScreenBg);
-    DrawTextCentered(Bottom, FontId::Small, Rect(0, 200, BOT_W, 16), "sims3ds - port no oficial (necesita tus datos del juego)" theme::TextDim);
+    DrawTextCentered(Bottom, FontId::Small, Rect(0, 200, BOT_W, 16), "sims3ds - port no oficial (necesita tus datos del juego)", theme::TextDim);
     if (Present) Present();
 }
 
