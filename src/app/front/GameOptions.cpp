@@ -11,6 +11,7 @@
 #include "app/front/ResGraphics.h"
 #include "app/front/TS1Font.h"
 #include <algorithm>
+#include "app/Font.h"
 
 namespace simapp { namespace front {
 
@@ -131,7 +132,7 @@ void GameOptions::Draw(Canvas& c, const Rect& r, const std::function<void(const 
             // ten touch steps along the track (the lot UI reports taps, not drags)
             for (int k = 0; k <= 10; k++) hit(Rect(track.X + track.W * k / 10 - track.W / 20, sy - 2, track.W / 10 + 1, 20), std::string("gopt_sl_") + sl[i].Id + "_" + std::to_string(k));
         }
-        if (!FrontAudioAvailable()) Text(c, TS1Size::S9, r.X + 6, py + 74, "(sound engine not running)", RGBA(140, 150, 190));
+        if (!FrontAudioAvailable()) Text(c, TS1Size::S9, r.X + 6, py + 74, "(motor de sonido inactivo)", RGBA(140, 150, 190));
     } else {
         check(r.X + 6, py, T.Get(145, 56, "Auto-Centering"), st.AutoCentering, "gopt_autocenter", false);
         check(col2, py, T.Get(145, 59, "Free Will"), st.FreeWill, "gopt_freewill", false);
@@ -140,7 +141,7 @@ void GameOptions::Draw(Canvas& c, const Rect& r, const std::function<void(const 
         check(r.X + 6, py + 36, T.Get(145, 75, "Auto Snapshot"), st.AutoSnapshot, "gopt_snapshot", false);
         check(col2, py + 36, T.Get(145, 78, "Live PIP"), st.LivePIP, "gopt_pip", false);
         // TS1(sims): how much the family's Sims act on their own (0 = wait for orders .. 3 = full free will)
-        radios(r.X + 6, py + 58, "Autonomy", st.FreeWill ? st.AutonomyLevel : 0, 4, "gopt_autonomy", { "0", "1", "2", "3" });
+        radios(r.X + 6, py + 58, ToLatin1("Autonomía"), st.FreeWill ? st.AutonomyLevel : 0, 4, "gopt_autonomy", { "0", "1", "2", "3" });
     }
 }
 
