@@ -53,7 +53,7 @@ static bool FlowFileExists(const std::string& p) {
 // (cache_version.txt) and the stale index deleted once (the next boot re-indexes Objects.far).
 // 3: archive paths relative to the install + Downloads/*.far sorted (portable caches, tools/simcache), every cache
 //    that stores archive indexes is rebuilt
-static const int CACHE_VERSION = 3; // 2: OBJD parsing fixed (lot UI pass)
+static const int CACHE_VERSION = 4; // 2: OBJD parsing fixed (lot UI pass)
 int App::CacheVersion() { return CACHE_VERSION; }
 
 void App::CheckCacheVersion() {
@@ -335,13 +335,11 @@ void App::InstallLoadHooks() {
 namespace {
 struct SavePhase { const char* Step; float From, To; const char* Label; };
 const SavePhase kSavePhases[] = {
-    { "save: house pictures",             0.00f, 0.78f, "Drawing house picture" },   // ~3.3 s
-    { "save: house file",                 0.78f, 0.98f, "Writing house file" },      // ~0.5-0.9 s
-    { "front: back to the neighbourhood", 0.98f, 0.98f, "Writing neighbourhood" },
-    { "save: neighbourhood",              0.98f, 1.00f, "Writing neighbourhood" },   // < 0.1 s
-    // leaving the lot: the overlay stays up (at 100 %) while the neighbourhood map loads (~3.5 s), which reports per lot
-    // and per picture of its art (NhoodModel::LoadArea, NeighbourhoodScreen::BuildArt)
-    { "front: neighbourhood map",         1.00f, 1.00f, "Loading the neighbourhood" },
+    { "save: house pictures",             0.00f, 0.78f, "Dibujando vista de la casa" },
+    { "save: house file",                 0.78f, 0.98f, "Guardando archivo de la casa" },
+    { "front: back to the neighbourhood", 0.98f, 0.98f, "Guardando el barrio" },
+    { "save: neighbourhood",              0.98f, 1.00f, "Guardando el barrio" },
+    { "front: neighbourhood map",         1.00f, 1.00f, "Cargando el barrio" },
 };
 }
 
@@ -473,16 +471,16 @@ bool App::LotFlow(const AppInput& in) {
     auto act = front::GameOptions::Get().TakeAction();
     if (_Lot && _Lot->LeaveRequested) { _Lot->LeaveRequested = false; act = front::GameOptions::Action::Neighbourhood; }
     if (_Lot && _Lot->QuitRequested) { _Lot->QuitRequested = false; act = front::GameOptions::Action::Quit; }
-    std::vector<std::string> ync = { T.Get(152, 2, "Yes"), T.Get(152, 3, "No"), T.Get(152, 1, "Cancel") };
+    std::vector<std::string> ync = { T.Get(152, 2, ToLatin1("Sí").c_str()), T.Get(152, 3, "No"), T.Get(152, 1, "Cancelar") };
     switch (act) {
         case front::GameOptions::Action::Neighbourhood:
-            _LotDialog->Show(T.Get(153, 3, "Save"), T.Get(153, 4, "Do you want to save the game?"), ync, [this](int r) {
+            _LotDialog->Show(T.Get(153, 3, "Guardar"), T.Get(153, 4, ToLatin1("¿Quieres guardar la partida?").c_str()), ync, [this](int r) {
                 if (r == 2) return;
                 _PendingLeave = r == 0 ? 1 : 2;
             });
             return true;
         case front::GameOptions::Action::Quit:
-            _LotDialog->Show(T.Get(153, 5, "Quit?"), T.Get(153, 6, "Do you want to save before quitting?"), ync, [this](int r) {
+            _LotDialog->Show(T.Get(153, 5, ToLatin1("¿Salir?").c_str()), T.Get(153, 6, ToLatin1("¿Quieres guardar antes de salir?").c_str()), ync, [this](int r) {
                 if (r == 2) return;
                 _PendingLeave = r == 0 ? 3 : 4;
             });
@@ -503,7 +501,7 @@ bool App::LotFlow(const AppInput& in) {
             EndSaveOverlay();
             // ADDED(sims) save progress: like TS1, a successful save just returns to the game (the overlay was the
             // feedback; the port's "The game has been saved." box is gone); a failure keeps the game's error box
-            if (!ok) _LotDialog->Show(T.Get(153, 15, "Save House"), T.Get(153, 14, "An error was encountered saving the house."), { T.Get(152, 0, "OK") }, nullptr);
+            if (!ok) _LotDialog->Show(T.Get(153, 15, "Guardar casa"), T.Get(153, 14, "Error al guardar la casa."), { T.Get(152, 0, "Aceptar") }, nullptr);
             Log += ok ? "saved house and neighbourhood\n" : "save failed\n";
             return true;
         }
