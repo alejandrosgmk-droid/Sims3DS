@@ -110,7 +110,7 @@ void App::StatusScreen(const std::string& title, const std::string& msg) {
     int y = 112;
     for (auto& l : lines) { DrawTextCentered(Top, FontId::Small, Rect(0, y, TOP_W, 14), l, theme::Text); y += 14; }
     Bottom.GradientV(0, 0, BOT_W, BOT_H, theme::PanelBottom, theme::ScreenBg);
-    DrawTextCentered(Bottom, FontId::Small, Rect(0, 200, BOT_W, 16), "sims3ds - unofficial engine port (needs your own game data)", theme::TextDim);
+    DrawTextCentered(Bottom, FontId::Small, Rect(0, 200, BOT_W, 16), "sims3ds - port no oficial (necesita tus datos del juego)" theme::TextDim);
     if (Present) Present();
 }
 
@@ -268,10 +268,10 @@ void App::Frame(const AppInput& inRaw, double dtMs) {
     }
     switch (_Mode) {
         case Mode::Boot:
-            StatusScreen("sims", "Starting...");
+            StatusScreen("sims", "Iniciando...");
             break;
         case Mode::Error:
-            StatusScreen("sims", _Error + "  (START quits)");
+            StatusScreen("sims", _Error + "  (START para salir)");
             if (in.Down & BTN_START) QuitRequested = true;
             if ((in.TouchDown || (in.Down & BTN_A)) && _Front) { _Front->ReturnFromLot(-1, -1, false); _Mode = Mode::Front; }
             break;
@@ -294,8 +294,8 @@ void App::Frame(const AppInput& inRaw, double dtMs) {
             // TS1(sims): any exception (std::bad_alloc on the 3DS) ends on the error screen + log.txt instead of
             // retrying the load every frame
             try { loaded = s->Load(_LoadHouse, TOP_W, TOP_H, _Cfg.ScrollBuffer, err, travel); }
-            catch (std::bad_alloc&) { err = "Out of memory while loading house " + std::to_string(_LoadHouse) + " (step: " + _LoadStep + ")"; }
-            catch (std::exception& e) { err = std::string("Lot load failed: ") + e.what() + " (step: " + _LoadStep + ")"; }
+            catch (std::bad_alloc&) { err = "Sin memoria al cargar la casa " + std::to_string(_LoadHouse) + " (step: " + _LoadStep + ")"; }
+            catch (std::exception& e) { err = std::string("Error al cargar el solar: ") + e.what() + " (step: " + _LoadStep + ")"; }
             _LoadTravel = false;
             if (!loaded) {
                 s.reset();
